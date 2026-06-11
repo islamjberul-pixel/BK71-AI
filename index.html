@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BK71 AI</title>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f5f5f5;
+    font-family:Arial,sans-serif;
+}
+.box{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+    text-align:center;
+    width:300px;
+}
+h1{
+    margin-bottom:20px;
+    color:#0066ff;
+}
+input{
+    width:90%;
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+button{
+    width:95%;
+    padding:10px;
+    margin-top:10px;
+    border:none;
+    border-radius:6px;
+    background:#0066ff;
+    color:#fff;
+    cursor:pointer;
+}
+button:hover{
+    opacity:.9;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h1>BK71 AI</h1>
+    <input type="password" id="pin" placeholder="Enter PIN">
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="openLink()">OPEN</button>
+</div>
+
+<script>
+function openLink(){
+    const pin = document.getElementById("pin").value;
+    const password = document.getElementById("password").value;
+
+    if(pin === "BK71" && password === "BK08083142"){
+        window.location.href = "https://docs.google.com/videos/u/6/mobilecreate?pli=1";
+    }else{
+        alert("Wrong PIN or Password!");
+    }
+}
+</script>
+
+</body>
+</html>
