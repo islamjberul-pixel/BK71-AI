@@ -6,109 +6,287 @@
 <title>BK71 AI</title>
 
 <style>
-body{
+*{
     margin:0;
-    height:100vh;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#f5f5f5;
-    font-family:Arial,sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding:20px;
 }
 
-.box{
-    width:320px;
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 0 15px rgba(0,0,0,.15);
+.box, .result-box{
+    width:100%;
+    max-width:360px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    padding:30px 25px;
+    border-radius:20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     text-align:center;
+    border: 1px solid rgba(255,255,255,0.3);
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp{
+    from{opacity:0;transform: translateY(30px);}
+    to{opacity:1;transform: translateY(0);}
 }
 
 h1{
-    color:#0066ff;
+    color:#667eea;
+    margin-bottom:20px;
+    font-size:28px;
+    font-weight:800;
 }
 
 .notice{
-    font-size:14px;
-    color:#444;
-    line-height:1.5;
-    margin-bottom:15px;
+    font-size:15px;
+    color:#555;
+    line-height:1.8;
+    margin-bottom:20px;
+    font-weight:500;
 }
 
 .yt-btn{
     display:block;
     width:100%;
-    padding:12px;
-    margin:10px 0;
-    background:#ff0000;
+    padding:14px;
+    margin:15px 0;
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
     color:#fff;
     text-decoration:none;
-    border-radius:8px;
+    border-radius:12px;
     font-weight:bold;
+    font-size:16px;
+    box-shadow: 0 5px 15px rgba(255,0,0,0.4);
 }
 
 .open-btn{
     width:100%;
-    padding:12px;
+    padding:14px;
     border:none;
-    border-radius:8px;
-    background:#0066ff;
+    border-radius:12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color:#fff;
-    font-size:16px;
+    font-size:17px;
     cursor:pointer;
     margin-top:10px;
+    font-weight:bold;
+    box-shadow: 0 5px 15px rgba(102,126,234,0.4);
 }
 
-.open-btn:hover{
-    opacity:0.9;
+.open-btn:disabled{
+    background: #ccc;
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
+.result-box{display:none;text-align:left;}
+.result-box h2{color:#667eea;text-align:center;margin-bottom:20px;font-size:24px;font-weight:800;}
+.result-box p{font-size:15px;color:#444;line-height:1.8;margin:12px 0;font-weight:500;}
+
+.important{
+    font-size:18px;
+    font-weight:800;
+    color:#fff;
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+    margin:20px 0;
+    box-shadow: 0 5px 20px rgba(255,65,108,0.4);
+    border:3px solid #fff;
+}
+
+.step-box{
+    background: #f8f9ff;
+    padding:15px;
+    border-radius:12px;
+    margin:12px 0;
+    border-left:4px solid #667eea;
+}
+
+.step-num{
+    background: #667eea;
+    color:#fff;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    margin-right:8px;
+    font-size:14px;
+}
+
+.link-box{
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    padding:15px;
+    border-radius:12px;
+    word-break:break-all;
+    font-size:13px;
+    color:#0066ff;
+    border:2px solid #667eea;
+    margin:15px 0;
+    cursor:pointer;
+    font-weight:600;
+    text-align:center;
+}
+
+.chrome-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
+    color:#fff;
+    font-size:17px;
+    cursor:pointer;
+    margin-top:15px;
+    font-weight:bold;
+    box-shadow: 0 5px 15px rgba(66,133,244,0.4);
+}
+
+.back-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background: #6c757d;
+    color:#fff;
+    font-size:15px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-
+<!-- পেইজ 1: সাবস্ক্রাইব -->
+<div class="box" id="firstPage">
 <h1>BK71 AI</h1>
-
 <div class="notice">
-এই সাইট ওপেন করতে হলে আগে YouTube চ্যানেল <b>Subscribe</b> করতে হবে। এবং ফোন এর ডেক্সটপ সাইট অন করতে হবে; নাহলে সাইট ওপেন হবে না।
+এই সাইট ওপেন করতে হলে আগে YouTube চ্যানেল <b>Subscribe</b> করতে হবে।
 <br><br>
 Subscribe না করলে OPEN বাটন কাজ করবে না।
 </div>
 
-<!-- YouTube Subscribe (App open) -->
-<a class="yt-btn"
+<a class="yt-btn" id="ytBtn"
    href="vnd.youtube://www.youtube.com/@4xempire077?sub_confirmation=1"
-   target="_blank">
+   target="_system">
 📺 Subscribe YouTube Channel
 </a>
 
-<button class="open-btn" onclick="openSite()">
+<button class="open-btn" id="openBtn" onclick="openSite()" disabled>
 OPEN
 </button>
+</div>
 
+<!-- পেইজ 2: ইন্সট্রাকশন -->
+<div class="result-box" id="resultPage">
+<h2>✅ সাবস্ক্রাইব সম্পন্ন!</h2>
+
+<div class="important">
+⚠️ সাইট 100% কাজ করবে শুধু যদি <br>
+"ডেস্কটপ সাইট" অন করেন!
+</div>
+
+<div class="step-box">
+<span class="step-num">১</span> নিচের লিঙ্ক কপি করুন
+</div>
+<div class="link-box" id="linkText">https://workspace.google.com/products/vids/?desktop=1</div>
+
+<div class="step-box">
+<span class="step-num">২</span> নিচের বাটনে ক্লিক করুন
+</div>
+<button class="chrome-btn" onclick="openChrome()">
+📱 Chrome এ ওপেন করুন
+</button>
+
+<div class="step-box">
+<span class="step-num">৩</span> Chrome খুললে উপরে ডানে 3 ডট ⋮ চাপ দিন
+</div>
+
+<div class="important">
+<span class="step-num">৪</span> "Desktop site" ✅ টিক দিন <br>
+টিক না দিলে সাইট ওপেন হবে না
+</div>
+
+<div class="step-box">
+<span class="step-num">৫</span> পেইজ রিলোড দিন 🔄
+</div>
+
+<button class="back-btn" onclick="goBack()">🔙 আবার ফিরে যান</button>
 </div>
 
 <script>
-
-// Fake subscribe check (NOT real verification)
 let subscribed = false;
+const openBtn = document.getElementById("openBtn");
+const ytBtn = document.getElementById("ytBtn");
+const firstPage = document.getElementById("firstPage");
+const resultPage = document.getElementById("resultPage");
+// ডেস্কটপ ফোর্স করার জন্য ?desktop=1 এড করছি
+const siteLink = "https://workspace.google.com/products/vids/?desktop=1";
 
-// user clicks subscribe button → assume subscribed
-document.querySelector(".yt-btn").addEventListener("click", function(){
-    subscribed = true;
+// সাব বাটনে ক্লিক → 5 সেকেন্ড পর OPEN এনাবল, কাউন্ট দেখাবে না
+ytBtn.addEventListener("click", function(){
+    ytBtn.style.pointerEvents = "none";
+    ytBtn.style.opacity = "0.7";
+    
+    setTimeout(function(){
+        subscribed = true;
+        openBtn.disabled = false;
+        openBtn.style.background = "linear-gradient(135deg, #28a745 0%, #20c997 100%)";
+        openBtn.innerText = "✅ OPEN করুন";
+        ytBtn.style.opacity = "1";
+        ytBtn.style.pointerEvents = "auto";
+        ytBtn.innerText = "✅ Subscribe করা হয়েছে";
+        ytBtn.style.background = "linear-gradient(135deg, #28a745 0%, #20c997 100%)";
+    }, 5000);
 });
 
+// OPEN বাটনে ক্লিক করলে কি হবে
 function openSite(){
     if(subscribed){
-        window.location.href = "https://docs.google.com/videos/u/6/mobilecreate?pli=1";
+        firstPage.style.display = "none";  // প্রথম পেইজ অফ
+        resultPage.style.display = "block"; // দ্বিতীয় পেইজ অন
     }else{
         alert("আগে YouTube চ্যানেল Subscribe করুন!");
     }
 }
 
+// 🔙 বাটনে ক্লিক করলে আবার প্রথম পেইজে ফিরে যাবে
+function goBack(){
+    resultPage.style.display = "none";   // দ্বিতীয় পেইজ অফ
+    firstPage.style.display = "block";   // প্রথম পেইজ অন
+}
+
+// লিংক কপি
+document.getElementById("linkText").addEventListener("click", function(){
+    navigator.clipboard.writeText(siteLink);
+    alert("লিঙ্ক কপি হয়েছে!");
+});
+
+// Chrome বাটনে ক্লিক করলে কি হবে
+function openChrome(){
+    navigator.clipboard.writeText(siteLink);
+    // HopWeb এর জন্য _system দিলে ফোনের আসল Chrome অ্যাপ খুলবে
+    let newWindow = window.open(siteLink, '_system');
+    if(!newWindow){
+        window.open(siteLink, '_blank');
+    }
+}
 </script>
 
 </body>
