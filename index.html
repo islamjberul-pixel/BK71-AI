@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BK71 AI 
- সাইট টি ওপেন করতে প্রথম এ আপনার ফোন এ ডেক্সটপ সাইট অন করে নিন নাহলে সাইট ওপেন হবে না</title>
+<title>BK71 AI</title>
+
 <style>
 body{
     margin:0;
@@ -15,60 +15,100 @@ body{
     background:#f5f5f5;
     font-family:Arial,sans-serif;
 }
+
 .box{
+    width:320px;
     background:#fff;
     padding:25px;
     border-radius:12px;
     box-shadow:0 0 15px rgba(0,0,0,.15);
     text-align:center;
-    width:300px;
 }
+
 h1{
-    margin-bottom:20px;
     color:#0066ff;
 }
-input{
-    width:90%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:6px;
+
+.notice{
+    font-size:14px;
+    color:#444;
+    line-height:1.5;
+    margin-bottom:15px;
 }
-button{
-    width:95%;
-    padding:10px;
-    margin-top:10px;
+
+.yt-btn{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    background:#ff0000;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.open-btn{
+    width:100%;
+    padding:12px;
     border:none;
-    border-radius:6px;
+    border-radius:8px;
     background:#0066ff;
     color:#fff;
+    font-size:16px;
     cursor:pointer;
+    margin-top:10px;
 }
-button:hover{
-    opacity:.9;
+
+.open-btn:hover{
+    opacity:0.9;
 }
 </style>
 </head>
+
 <body>
 
 <div class="box">
-    <h1>BK71 AI</h1>
-    <input type="password" id="pin" placeholder="Enter PIN">
-    <input type="password" id="password" placeholder="Enter Password">
-    <button onclick="openLink()">OPEN</button>
+
+<h1>BK71 AI</h1>
+
+<div class="notice">
+এই সাইট ওপেন করতে হলে আগে YouTube চ্যানেল <b>Subscribe</b> করতে হবে। এবং ফোন এর ডেক্সটপ সাইট অন করতে হবে; নাহলে সাইট ওপেন হবে না।
+<br><br>
+Subscribe না করলে OPEN বাটন কাজ করবে না।
+</div>
+
+<!-- YouTube Subscribe (App open) -->
+<a class="yt-btn"
+   href="vnd.youtube://www.youtube.com/@4xempire077?sub_confirmation=1"
+   target="_blank">
+📺 Subscribe YouTube Channel
+</a>
+
+<button class="open-btn" onclick="openSite()">
+OPEN
+</button>
+
 </div>
 
 <script>
-function openLink(){
-    const pin = document.getElementById("pin").value;
-    const password = document.getElementById("password").value;
 
-    if(pin === "BK71" && password === "BK08083142"){
+// Fake subscribe check (NOT real verification)
+let subscribed = false;
+
+// user clicks subscribe button → assume subscribed
+document.querySelector(".yt-btn").addEventListener("click", function(){
+    subscribed = true;
+});
+
+function openSite(){
+    if(subscribed){
         window.location.href = "https://docs.google.com/videos/u/6/mobilecreate?pli=1";
     }else{
-        alert("Wrong PIN or Password!");
+        alert("আগে YouTube চ্যানেল Subscribe করুন!");
     }
 }
+
 </script>
 
 </body>
